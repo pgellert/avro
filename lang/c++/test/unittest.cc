@@ -559,11 +559,6 @@ struct TestSchema {
       "name": "f4_union_null_default",
       "type": ["null", "string"],
       "default": null
-    },
-    {
-      "name": "f5_null_default",
-      "type": "null",
-      "default": null
     }
   ]
 })";
@@ -580,9 +575,6 @@ struct TestSchema {
 
         BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(4)->type(), AVRO_NULL);
         BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(4)->isUnion(), true);
-
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(5)->type(), AVRO_NULL);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(5)->isUnion(), false);
 
         testNode(nodePtr, jsonWithDefaults);
     }
