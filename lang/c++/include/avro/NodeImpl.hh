@@ -339,7 +339,12 @@ public:
         return ((nameAttribute_.size() == 1) && (leafAttributes_.size() == leafNameAttributes_.size()) && (customAttributes_.size() == 0 || customAttributes_.size() == leafAttributes_.size()));
     }
 
-    const std::optional<GenericDatum> &defaultValueAt(size_t index) const override {
+    const GenericDatum &defaultValueAt(size_t index) const override {
+        static const auto null_default = GenericDatum();
+        return fieldsDefaultValues_[index] ? *fieldsDefaultValues_[index] : null_default;
+    }
+
+    const std::optional<GenericDatum> &maybeDefaultValueAt(size_t index) const override {
         return fieldsDefaultValues_[index];
     }
     void doAddDefault(const std::optional<GenericDatum> &fieldDefault) override {
@@ -379,7 +384,13 @@ public:
             (nameAttribute_.size() == 1) && (leafNameAttributes_.size() > 0));
     }
 
-    const std::optional<GenericDatum> &defaultValueAt(size_t index) const override {
+    const GenericDatum &defaultValueAt(size_t index) const override {
+        const auto& maybe_def = maybeDefaultValueAt(index);
+        static const auto null_default = GenericDatum();
+        return maybe_def ? *maybe_def : null_default;
+    }
+
+    const std::optional<GenericDatum> &maybeDefaultValueAt(size_t index) const override {
         if (index != 0) {
             throw Exception("Enum has only 1 default");
         }

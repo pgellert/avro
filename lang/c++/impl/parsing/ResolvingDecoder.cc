@@ -212,7 +212,7 @@ ProductionPtr ResolvingGrammarGenerator::resolveRecords(
             s = resolveSymbol(s);
         }
 
-        auto reader_def = reader->defaultValueAt(ri);
+        auto reader_def = reader->maybeDefaultValueAt(ri);
         if (!reader_def) {
             // If the reader’s record schema has a field with no default value, and writer’s schema does not have a
             // field with the same name, an error is signalled.

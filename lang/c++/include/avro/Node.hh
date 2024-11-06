@@ -145,7 +145,14 @@ public:
     }
     virtual size_t leaves() const = 0;
     virtual const NodePtr &leafAt(size_t index) const = 0;
-    virtual const std::optional<GenericDatum> &defaultValueAt(size_t index) const {
+
+    // Note: use maybeDefaultValueAt instead. For null-type record fields, defaultValueAt returns GenericDatum() both
+    // when the "default" of the field is set to null explicitly and when it is omitted. maybeDefaultValueAt is able to
+    // differentiate between these cases by returning std::nullopt whenever the field is not set.
+    virtual const GenericDatum &defaultValueAt(size_t index) const {
+        throw Exception("No default value at: {}", index);
+    }
+    virtual const std::optional<GenericDatum> &maybeDefaultValueAt(size_t index) const {
         throw Exception("No default value at: {}", index);
     }
 

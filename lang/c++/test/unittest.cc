@@ -566,15 +566,15 @@ struct TestSchema {
         const auto& nodePtr = *schema.root();
 
         BOOST_CHECK_EQUAL(nodePtr.type(), AVRO_RECORD);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(0).has_value(), false);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(1).has_value(), false);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(2).has_value(), false);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(0).has_value(), false);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(1).has_value(), false);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(2).has_value(), false);
 
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(3)->type(), AVRO_STRING);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(3)->isUnion(), true);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(3)->type(), AVRO_STRING);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(3)->isUnion(), true);
 
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(4)->type(), AVRO_NULL);
-        BOOST_CHECK_EQUAL(nodePtr.defaultValueAt(4)->isUnion(), true);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(4)->type(), AVRO_NULL);
+        BOOST_CHECK_EQUAL(nodePtr.maybeDefaultValueAt(4)->isUnion(), true);
 
         testNode(nodePtr, jsonWithDefaults);
     }
